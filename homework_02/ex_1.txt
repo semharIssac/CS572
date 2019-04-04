@@ -1,0 +1,6 @@
+1, The reason why we want to use setImmeddiate instead of setTimeout is setImmediate will always be executed before any timers if scheduled within an I/O cycle, independently of how many timers are present.
+
+
+2,  process.nextTick() is not technically part of the event loop but setImmediate is and process.nextTick() will be executed first.
+
+3,  V8, url, util, path, os,http, buffer, events, querystring, timers
