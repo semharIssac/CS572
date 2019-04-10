@@ -1,0 +1,53 @@
+1, Zipcodes in Washington state
+.aggregate([
+    { $match: { state: 'WA' } }
+   
+  ])
+
+2, 
+.aggregate([
+    { $match: { pop: {$lt: 5000} } }
+   
+  ])
+
+3
+ {
+      $group: {
+        _id: {city: '$city', state: '$state'},
+        numberOfZipCDS: { $sum: 1 }
+      }
+    },
+    {
+      $match: {
+        numberOfZipCDS: { $gt: 1 }
+      }
+    },
+      {
+        $project:{
+          _id:0,
+          city: '$_id.city',
+          state: '$_id.state',
+          numberOfZipCodes: '$numberOfZipCDS'
+        }
+      },
+      {$sort: {state: -1, city: -1}},
+  ])
+
+  4,
+  .aggregate([
+    {$group: 
+      {
+        _id: {state: "$state", city: "$city"},
+        pop: {$sum: "$pop"}
+      }
+    },
+    {$sort: {pop: 1} },
+    {$group: {
+      _id: "$_id.state",
+      bgCity: {$last: "$_id.city"},
+      bgPop: {$last: "$pop"},
+      smCity: {$first: "$_id.city"},
+      smPop: {$first: "$pop"}
+    }
+      }
+   ])
