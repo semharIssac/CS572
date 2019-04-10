@@ -15,10 +15,13 @@ function myQueries(){
   const db = client.db(dbName);
   const collection =db.collection(collectionName);
   
-  collection.find({}).limit(10).toArray((error, data) => {
+  db.collection('restaurants').find({name: {$regex: /^Mad/}},{projection:{name: 1, district: 1, cuisine:1, "address.coord": 1}})
+  .toArray((error, data) => {
     console.dir(data);
+
     client.close();
-    
   })
+    
+  
 
 }

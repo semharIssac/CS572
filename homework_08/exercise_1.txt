@@ -1,0 +1,72 @@
+All queries are done on "db.collection('restaurants')"
+1, Display all documents
+.find({});
+
+2,  Display the fields restaurant_id, name, district and cuisine
+.find({}, {projection: {restaurant_id:1, name:1, district:1, cuisine: 1} })
+
+3, Display the fields restaurant_id, name, district and cuisine,exclude id
+.find({}, {projection: {restaurant_id:1, name:1, district:1, cuisine: 1, _id:0} })
+
+4, Display the fields restaurant_id, name, district and zipcode,exclude id
+.find({}, {projection: {restaurant_id:1, name:1, district:1,"address.zipcode": 1 , _id:0} })
+
+5, display restaurants in district Bronx
+.find({district: 'Bronx' })
+
+6, display restaurants in district Bronx limit to 5
+.find({district: 'Bronx' }).limit(5);
+
+7,  display restaurants in district Bronx limit to 5 after skip 5
+.find({district: 'Bronx' }).limit(5).skip(5);
+
+8, Display restaurant which locates lessthan value -95.754168
+.find({"address.coord": {$ls: -95.754168}})
+
+9, display restaurants which does not prepare cousin of America,gradescore >70, coord value < -65.754168
+.find({"cuisine": {$ne: "American "}, "grades": {$elemMatch: {$gt: 70}}, "address": {$elemMatch: {$lt: -65.754168}}}) 
+
+10,Display restaurant_id, name, district, cuisine for restaurants name wich starts with "Wil"
+.find({"name": {$regex:/^Wil/ }}, {projection: {restaurant_id: 1, district: 1, cuisine:1, name: 1
+  }})
+
+  11, Display restaurant_id, name, district, cuisine which contains "ces" as last three leters
+.find({"name": {$regex:/ces$/ }}, {projection: {restaurant_id: 1, district: 1, cuisine:1, name: 1
+  }})
+
+  12, Display restaurant_id, name, district, cuisine which contains "reg" somewhere in the qn
+  .find({"name": {$regex:/reg/ }}, {projection: {restaurant_id: 1, district: 1, cuisine:1, name: 1
+  }})
+
+  13, Display district Bronx and prepared either  American or Chinese dish
+  .find({"district": 'Bronx'}, cuisine:{$in:["American", "Chinese"] })
+
+  14, Display restaurant_id, name, district, cuisine for restaurants belong to district Staten, Island, Queens, Bronx or Brooklyn
+  .find({district: {$in: ["Staten", "Island", "Queens", "Bronx", "Brooklyn"]}},{projection: {restaurant_id: 1, district: 1, cuisine:1, name: 1}})
+
+  15, Display restaurant_id, name, district, cuisine for restaurants does not belong to district Staten, Island, Queens, Bronx or Brooklyn
+   .find({district: {$nin: ["Staten", "Island", "Queens", "Bronx", "Brooklyn"]}},(projection: {restaurant_id: 1, district: 1, cuisine:1, name: 1}))
+
+  16,  Display restaurant_id, name, district, cuisine for restaurants which achieve score more than 10
+.find({"grades": {$elemMatch:{score:{$gt: 10}}},{projection: {restaurant_id: 1, district: 1, cuisine:1, name: 1}})
+
+17, Display restaurant_id, name, address, gegraphical location for restaurant whose second element of coord array contains value 42<x<52
+.find({coord[1]:{$elemMatch: {$gt: 42, $lt: 52}}}, {projection: {restaurant_id: 1, name: 1,coord: 1}})
+
+18, Display name ascending way
+.find({}).sort( { name: 1 } )
+
+19,Display name descending way
+.find({}).sort( { name: -1 } )
+
+20,
+.find({}).sort( { cuisine: 1, district: -1 } )
+
+21,
+.find({"address.street": {$exist: false}})
+
+22,
+.find({"address.coord": {$type: "double"}})
+
+23,
+.find({name: {$regex": /^Mad/}},{projection:{name: 1, district: 1, cuisine:1, "address.coord": 1}})
