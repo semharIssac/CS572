@@ -40,6 +40,7 @@ app.post('/locations', (req, res, next) =>{
   const location = req.body;
   console.dir(location);
   req.connection.insetrtOne(location);
+  
   res.json({status: 200, message:`Location inserted is ${location}`});
 });
 

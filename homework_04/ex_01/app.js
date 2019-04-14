@@ -1,5 +1,7 @@
 const os = require('os');
 const {Observable} = require('rxjs');
+
+
 function checkSystem(){
   const oneGB = Math.pow(2, 30);
   const myCompMem = os.totalmem()/oneGB;
@@ -18,7 +20,7 @@ function checkSystem(){
 
 }
 console.log("Checking your system...");
-Observable.create(function(observer){
+Observable.create(observer => {
 
  const message = checkSystem();
  observer.next(message);
