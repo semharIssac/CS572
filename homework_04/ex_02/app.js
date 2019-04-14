@@ -16,7 +16,7 @@ function processRequest(requestResponseObject) {
   const pathname = url.parse(request.url, true).query.url;
   if (pathname) {
     response.end("We got some url", pathname);
-    console.log(pathname)
+    console.log("Path Name", pathname)
   }
   else response.end("We got url. Thanks");
 }
