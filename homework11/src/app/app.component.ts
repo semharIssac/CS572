@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
   <h2>Counter<h2>
-
+  Component Counter Value = {{componentCounterValue}}
   <counter [counter]="componentCounterValue" (counterChange)='change($event)' ></counter>
   `,
   styles: [`h2 {text-align: center}`]
